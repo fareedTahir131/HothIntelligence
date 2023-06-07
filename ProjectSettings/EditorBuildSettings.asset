@@ -11,4 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Login.unity
     guid: 89dfe251823494f04931735ce8b390e1
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 1db819418ebd14481b47d7d1adef99ce
+  - enabled: 1
+    path: Assets/Scenes/FaceTracking.unity
+    guid: affea69ae6534491099f7ef489fd94eb
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 78e7c60897f00474c80f96f9703e582c, type: 2}
+    UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: 9392e32d13a3041a8b020519915f3b58, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 2986328fdcccf4c68933440814310c82, type: 2}
