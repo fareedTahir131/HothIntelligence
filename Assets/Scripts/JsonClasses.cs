@@ -12,3 +12,14 @@ public class Patient
 {
     public GameObject[] Models;
 }
+[Serializable]
+public class ModelMaterials
+{
+    public Material DefaultMaterial;
+    public Material TransparentMaterial;
+}
+[Serializable]
+public class Models
+{
+    public ModelMaterials[] materials;
+}
