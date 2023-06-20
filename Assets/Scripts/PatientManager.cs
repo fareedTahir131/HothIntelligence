@@ -12,7 +12,16 @@ public class PatientManager : MonoBehaviour
     public Transform ModelsContent;
     public Transform UsersContent;
 
+    public Scrollbar FaceTransparencyScroll;
+    public Scrollbar SkullTransparencyScroll;
+    public Scrollbar BrainTransparencyScroll;
+
+    public Toggle[] Toggles;
+
+    public float DefaultTransparencyValue = 0.5f;
     private GameObject PatientGO;
+
+    private Color color;
 
     private void Awake()
     {
@@ -25,16 +34,30 @@ public class PatientManager : MonoBehaviour
             Instance = this;
         }
     }
+
+    private void Start()
+    {
+        SetDefaultTransparency();
+        ResetScrollValue();
+        ResetToggle(true);
+    }
     public void SetPatientIndex(int Index)
     {
 
     }
-
+    public void LockModel(bool value)
+    {
+        PatientGO = GameObject.FindWithTag("Patient_1");
+        PatientGO.GetComponent<ARFace>().destroyOnRemoval = value;
+    }
     public void SetPatientModelIndex(int Index)
     {
-        MakeModelTransparent( Index);
-        MakeModelSolidVisible( Index);
-        HighliteSelectedModel(Index,ModelsContent);
+        if (Toggles[Index].isOn)
+        {
+            MakeModelTransparent(Index);
+            MakeModelSolidVisible(Index);
+        }
+        HighliteSelectedModel(Index, ModelsContent);
     }
     private void HighliteSelectedModel(int index, Transform Content)
     {
@@ -62,7 +85,75 @@ public class PatientManager : MonoBehaviour
         Component[] MeshRenderers = PatientGO.transform.GetChild(Index).GetComponentsInChildren<MeshRenderer>();
         foreach (MeshRenderer ModelMeshRenderer in MeshRenderers)
         {
-            ModelMeshRenderer.material = Modelmaterials[0].materials[Index].DefaultMaterial;
+            //ModelMeshRenderer.material = Modelmaterials[0].materials[Index].DefaultMaterial;
+            ModelMeshRenderer.material = Modelmaterials[0].materials[Index].TransparentMaterial;
         }
+    }
+    private void ResetToggle(bool value)
+    {
+        foreach (Toggle toggle in Toggles)
+        {
+            toggle.isOn = value;
+        }
+    }
+    public void ToggleManager(int Index)
+    {
+        if (Toggles[Index].isOn)
+        {
+            DisableModel(Index, true);
+        }
+        else
+        {
+            DisableModel(Index,false);
+        }
+    }
+    private void DisableModel(int ModelIndex,bool value)
+    {
+        try
+        {
+            PatientGO = GameObject.FindWithTag("Patient_1");
+            PatientGO.transform.GetChild(ModelIndex).gameObject.SetActive(value);
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("No Model Found");
+        }
+        
+    }
+    public void ApplyFaceCustomizedTransparency()
+    {
+        color = Modelmaterials[0].materials[0].TransparentMaterial.color;
+        color.a = FaceTransparencyScroll.value;
+        Modelmaterials[0].materials[0].TransparentMaterial.color = color;
+    }
+    public void ApplySkullCustomizedTransparency()
+    {
+        color = Modelmaterials[0].materials[1].TransparentMaterial.color;
+        color.a = SkullTransparencyScroll.value;
+        Modelmaterials[0].materials[1].TransparentMaterial.color = color;
+    }
+    public void ApplyBrainCustomizedTransparency()
+    {
+        color = Modelmaterials[0].materials[2].TransparentMaterial.color;
+        color.a = BrainTransparencyScroll.value;
+        Modelmaterials[0].materials[2].TransparentMaterial.color = color;
+    }
+    private void SetDefaultTransparency()
+    {
+        for (int i = 0; i < Modelmaterials.Length; i++)
+        {
+            for (int j = 0; j < Modelmaterials[i].materials.Length; j++)
+            {
+                color = Modelmaterials[i].materials[j].TransparentMaterial.color;
+                color.a = DefaultTransparencyValue;
+                Modelmaterials[i].materials[j].TransparentMaterial.color = color;
+            }
+        }
+    }
+    private void ResetScrollValue()
+    {
+        FaceTransparencyScroll.value = DefaultTransparencyValue;
+        SkullTransparencyScroll.value = DefaultTransparencyValue;
+        BrainTransparencyScroll.value = DefaultTransparencyValue;
     }
 }
