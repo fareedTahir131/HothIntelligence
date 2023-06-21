@@ -12,10 +12,13 @@ public class PatientManager : MonoBehaviour
     public Transform ModelsContent;
     public Transform UsersContent;
 
-    public Scrollbar FaceTransparencyScroll;
-    public Scrollbar SkullTransparencyScroll;
-    public Scrollbar BrainTransparencyScroll;
+    public Slider FaceTransparencySlider;
+    public Slider SkullTransparencySlider;
+    public Slider BrainTransparencySlider;
 
+    public GameObject FaceDetection;
+
+    public Toggle ModelLockToggle;
     public Toggle[] Toggles;
 
     public float DefaultTransparencyValue = 0.5f;
@@ -89,6 +92,19 @@ public class PatientManager : MonoBehaviour
             ModelMeshRenderer.material = Modelmaterials[0].materials[Index].TransparentMaterial;
         }
     }
+    public void ToggleLockManager()
+    {
+        if (ModelLockToggle.isOn)
+        {
+            LockModel(true);
+            FaceDetection.SetActive(true);
+        }
+        else
+        {
+            LockModel(false);
+            FaceDetection.SetActive(false);
+        }
+    }
     private void ResetToggle(bool value)
     {
         foreach (Toggle toggle in Toggles)
@@ -123,19 +139,19 @@ public class PatientManager : MonoBehaviour
     public void ApplyFaceCustomizedTransparency()
     {
         color = Modelmaterials[0].materials[0].TransparentMaterial.color;
-        color.a = FaceTransparencyScroll.value;
+        color.a = FaceTransparencySlider.value;
         Modelmaterials[0].materials[0].TransparentMaterial.color = color;
     }
     public void ApplySkullCustomizedTransparency()
     {
         color = Modelmaterials[0].materials[1].TransparentMaterial.color;
-        color.a = SkullTransparencyScroll.value;
+        color.a = SkullTransparencySlider.value;
         Modelmaterials[0].materials[1].TransparentMaterial.color = color;
     }
     public void ApplyBrainCustomizedTransparency()
     {
         color = Modelmaterials[0].materials[2].TransparentMaterial.color;
-        color.a = BrainTransparencyScroll.value;
+        color.a = BrainTransparencySlider.value;
         Modelmaterials[0].materials[2].TransparentMaterial.color = color;
     }
     private void SetDefaultTransparency()
@@ -152,8 +168,8 @@ public class PatientManager : MonoBehaviour
     }
     private void ResetScrollValue()
     {
-        FaceTransparencyScroll.value = DefaultTransparencyValue;
-        SkullTransparencyScroll.value = DefaultTransparencyValue;
-        BrainTransparencyScroll.value = DefaultTransparencyValue;
+        FaceTransparencySlider.value = DefaultTransparencyValue;
+        SkullTransparencySlider.value = DefaultTransparencyValue;
+        BrainTransparencySlider.value = DefaultTransparencyValue;
     }
 }
