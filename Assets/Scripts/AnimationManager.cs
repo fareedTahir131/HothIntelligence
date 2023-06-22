@@ -5,15 +5,45 @@ using DG.Tweening;
 
 public class AnimationManager : MonoBehaviour
 {
-    public float Duration = 0.4f;
-    public GameObject PatientsScreen;
+    public static AnimationManager Instance;
 
-    public void SkinSlideManager(float Value)
+    private void Awake()
     {
-        SlideUI(PatientsScreen, Value);
+        if (Instance!=null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
-    private void SlideUI(GameObject Screen, float value)
+
+    public void SlideUI(GameObject Screen, float value, float Duration)
     {
         Screen.GetComponent<RectTransform>().DOLocalMove(new Vector3(0, value, 0), Duration).SetEase(Ease.InOutBack);
+    }
+    public void ScaleAnimation(GameObject Screen,float Scale, float Duration)
+    {
+        Screen.GetComponent<RectTransform>().DOScale(new Vector3(Scale, Scale, Scale),Duration).SetEase(Ease.OutBack);
+    }
+    public void FadeScreen(CanvasGroup Screen, float FadeTime,float Visibility)
+    {
+        if (Visibility>0)
+        {
+            Debug.Log("Enabled");
+            Screen.gameObject.SetActive(true);
+            Screen.DOFade(Visibility, FadeTime);
+        }
+        else
+        {
+            Screen.DOFade(Visibility, FadeTime);
+            StartCoroutine(WaitToDisable(Screen.gameObject, false, FadeTime));
+        }
+    }
+    IEnumerator WaitToDisable(GameObject Screen, bool value, float Duration)
+    {
+        yield return new WaitForSeconds(Duration);
+        Screen.SetActive(value);
     }
 }

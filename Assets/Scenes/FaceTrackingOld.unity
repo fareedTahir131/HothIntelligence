@@ -1522,9 +1522,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 308225875}
-        m_TargetAssemblyTypeName: AnimationManager, Assembly-CSharp
-        m_MethodName: SkinSlideManager
+      - m_Target: {fileID: 347645689}
+        m_TargetAssemblyTypeName: PatientManager, Assembly-CSharp
+        m_MethodName: PatientsScreenManager
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1831,8 +1831,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a165c7176864f4bb4698b49346af67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Duration: 0.4
-  PatientsScreen: {fileID: 89482917}
 --- !u!1 &347645687
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,6 +1889,7 @@ MonoBehaviour:
   SkullTransparencySlider: {fileID: 878867087}
   BrainTransparencySlider: {fileID: 824161653}
   FaceDetection: {fileID: 1249404572}
+  PatientsScreen: {fileID: 89482917}
   ModelLockToggle: {fileID: 977158924}
   Toggles:
   - {fileID: 1159568353}
@@ -7931,9 +7930,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 308225875}
-        m_TargetAssemblyTypeName: AnimationManager, Assembly-CSharp
-        m_MethodName: SkinSlideManager
+      - m_Target: {fileID: 347645689}
+        m_TargetAssemblyTypeName: PatientManager, Assembly-CSharp
+        m_MethodName: PatientsScreenManager
         m_Mode: 4
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

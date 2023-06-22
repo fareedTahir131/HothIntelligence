@@ -388,7 +388,7 @@ RectTransform:
   - {fileID: 611316755}
   - {fileID: 248157358}
   m_Father: {fileID: 1780413948}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.055136453, y: 0.42200002}
   m_AnchorMax: {x: 0.79113764, y: 0.58847636}
@@ -1505,6 +1505,7 @@ Transform:
   m_Children:
   - {fileID: 1233440418}
   - {fileID: 1182926391}
+  - {fileID: 1864967425}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2286,6 +2287,7 @@ GameObject:
   - component: {fileID: 525007946}
   - component: {fileID: 525007948}
   - component: {fileID: 525007947}
+  - component: {fileID: 525007949}
   m_Layer: 5
   m_Name: PopupBG
   m_TagString: Untagged
@@ -2353,6 +2355,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 525007945}
   m_CullTransparentMesh: 1
+--- !u!225 &525007949
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 525007945}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &539661256
 GameObject:
   m_ObjectHideFlags: 0
@@ -2713,6 +2727,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1864967426}
+        m_TargetAssemblyTypeName: AnimationManager, Assembly-CSharp
+        m_MethodName: IncreaseScaleAnim
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 1780413947}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5204,12 +5230,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 700c2e3826ed64921ab1b8c77f233e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RenamePopup: {fileID: 525007945}
+  RenamePopupBG: {fileID: 525007945}
+  RenamePopup: {fileID: 1780413947}
   PatientsNames:
   - {fileID: 694406612}
   - {fileID: 1611532431}
   - {fileID: 1860006032}
   RenameInputField: {fileID: 141496362}
+  Wait: 0.6
 --- !u!1 &1189771472
 GameObject:
   m_ObjectHideFlags: 0
@@ -7044,7 +7072,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1780413948}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -7286,7 +7314,7 @@ RectTransform:
   m_Children:
   - {fileID: 1955267820}
   m_Father: {fileID: 1780413948}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.34345296, y: 0.015236893}
   m_AnchorMax: {x: 0.65300006, y: 0.21300001}
@@ -7337,10 +7365,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 525007945}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1182926392}
+        m_TargetAssemblyTypeName: PatientsDataManager, Assembly-CSharp
+        m_MethodName: CancelRenameOperation
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8171,13 +8199,13 @@ RectTransform:
   m_GameObject: {fileID: 1780413947}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1599579550}
   - {fileID: 141496361}
   - {fileID: 1617494842}
   - {fileID: 1937456793}
-  - {fileID: 1599579550}
   m_Father: {fileID: 525007946}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8474,6 +8502,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1860006030}
   m_CullTransparentMesh: 1
+--- !u!1 &1864967424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1864967425}
+  - component: {fileID: 1864967426}
+  m_Layer: 0
+  m_Name: AnimationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1864967425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864967424}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 277602161}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1864967426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1864967424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a165c7176864f4bb4698b49346af67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1902870424
 GameObject:
   m_ObjectHideFlags: 0
@@ -8741,7 +8813,7 @@ RectTransform:
   m_Children:
   - {fileID: 859553504}
   m_Father: {fileID: 1780413948}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.65300006, y: 0.015236893}
   m_AnchorMax: {x: 0.9626023, y: 0.21300001}

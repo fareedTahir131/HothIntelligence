@@ -17,6 +17,7 @@ public class PatientManager : MonoBehaviour
     public Slider BrainTransparencySlider;
 
     public GameObject FaceDetection;
+    public GameObject PatientsScreen;
 
     public Toggle ModelLockToggle;
     public Toggle[] Toggles;
@@ -47,6 +48,10 @@ public class PatientManager : MonoBehaviour
     public void SetPatientIndex(int Index)
     {
 
+    }
+    public void PatientsScreenManager(float value)
+    {
+        AnimationManager.Instance.SlideUI(PatientsScreen, value, 0.5f);
     }
     public void LockModel(bool value)
     {
