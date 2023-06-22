@@ -8,7 +8,7 @@ public class ModelItem : MonoBehaviour
     public int TransparencyModelIndex;
     public void ViewModel(int ModelIndex)
     {
-        PatientManager.Instance.SetPatientModelIndex(ModelIndex);
+        //PatientManager.Instance.SetPatientModelIndex(ModelIndex);
     }
     
 }

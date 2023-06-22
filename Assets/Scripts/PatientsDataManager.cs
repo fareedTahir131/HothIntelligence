@@ -22,6 +22,7 @@ public class PatientsDataManager : MonoBehaviour
         RenamePopupBG.SetActive(true);
         AnimationManager.Instance.FadeScreen(RenamePopupBG.GetComponent<CanvasGroup>(),0.5f,1);
         AnimationManager.Instance.ScaleAnimation(RenamePopup,1,0.5f);
+        RenameInputField.ActivateInputField();
     }
     public void RenamePatient()
     {

@@ -9,7 +9,7 @@ public class PatientManager : MonoBehaviour
     public static PatientManager Instance;
 
     public Models[] Modelmaterials;
-    public Transform ModelsContent;
+    //public Transform ModelsContent;
     public Transform UsersContent;
 
     public Slider FaceTransparencySlider;
@@ -41,13 +41,9 @@ public class PatientManager : MonoBehaviour
 
     private void Start()
     {
-        SetDefaultTransparency();
-        ResetScrollValue();
+        //SetDefaultTransparency();
+        //ResetScrollValue();
         ResetToggle(true);
-    }
-    public void SetPatientIndex(int Index)
-    {
-
     }
     public void PatientsScreenManager(float value)
     {
@@ -58,38 +54,36 @@ public class PatientManager : MonoBehaviour
         PatientGO = GameObject.FindWithTag("Patient_1");
         PatientGO.GetComponent<ARFace>().destroyOnRemoval = value;
     }
-    public void SetPatientModelIndex(int Index)
-    {
-        if (Toggles[Index].isOn)
-        {
-            MakeModelTransparent(Index);
-            MakeModelSolidVisible(Index);
-        }
-        HighliteSelectedModel(Index, ModelsContent);
-    }
-    private void HighliteSelectedModel(int index, Transform Content)
-    {
-        foreach (Transform item in Content)
-        {
-            item.GetComponent<ModelItem>().HighlightUI.SetActive(false);
-        }
-        Content.GetChild(index).GetComponent<ModelItem>().HighlightUI.SetActive(true);
-    }
+    //public void SetPatientModelIndex(int Index)
+    //{
+    //    if (Toggles[Index].isOn)
+    //    {
+    //        MakeModelTransparent(Index);
+    //        //MakeModelSolidVisible(Index);
+    //    }
+    //    //HighliteSelectedModel(Index, ModelsContent);
+    //}
+    //private void HighliteSelectedModel(int index, Transform Content)
+    //{
+    //    foreach (Transform item in Content)
+    //    {
+    //        item.GetComponent<ModelItem>().HighlightUI.SetActive(false);
+    //    }
+    //    Content.GetChild(index).GetComponent<ModelItem>().HighlightUI.SetActive(true);
+    //}
     public void MakeModelTransparent(int Index)
     {
         PatientGO = GameObject.FindWithTag("Patient_1");
-        for (int i = 0; i <= Index; i++)
-        {
-            PatientGO.transform.GetChild(Index).gameObject.SetActive(true);
-            Component[] MeshRenderers = PatientGO.transform.GetChild(i).GetComponentsInChildren<MeshRenderer>();
-            foreach (MeshRenderer ModelMeshRenderer in MeshRenderers)
-            {
-                ModelMeshRenderer.material = Modelmaterials[0].materials[i].TransparentMaterial;
-            }
-        }
-    }
-    private void MakeModelSolidVisible(int Index)
-    {
+        //for (int i = 0; i <= Index; i++)
+        //{
+        //    PatientGO.transform.GetChild(Index).gameObject.SetActive(true);
+        //    Component[] MeshRenderers = PatientGO.transform.GetChild(i).GetComponentsInChildren<MeshRenderer>();
+        //    foreach (MeshRenderer ModelMeshRenderer in MeshRenderers)
+        //    {
+        //        ModelMeshRenderer.material = Modelmaterials[0].materials[i].TransparentMaterial;
+        //    }
+        //}
+
         Component[] MeshRenderers = PatientGO.transform.GetChild(Index).GetComponentsInChildren<MeshRenderer>();
         foreach (MeshRenderer ModelMeshRenderer in MeshRenderers)
         {
@@ -97,17 +91,40 @@ public class PatientManager : MonoBehaviour
             ModelMeshRenderer.material = Modelmaterials[0].materials[Index].TransparentMaterial;
         }
     }
+    private void MakeModelsSolidVisible(int Index)
+    {
+        PatientGO = GameObject.FindWithTag("Patient_1");
+        Component[] MeshRenderers = PatientGO.transform.GetChild(Index).GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer ModelMeshRenderer in MeshRenderers)
+        {
+            ModelMeshRenderer.material = Modelmaterials[0].materials[Index].DefaultMaterial;
+            //ModelMeshRenderer.material = Modelmaterials[0].materials[Index].TransparentMaterial;
+        }
+        //PatientGO = GameObject.FindWithTag("Patient_1");
+        //for (int i = 0; i <= Index; i++)
+        //{
+        //    if (i>Index)
+        //    {
+        //        PatientGO.transform.GetChild(Index).gameObject.SetActive(true);
+        //        Component[] MeshRenderers = PatientGO.transform.GetChild(i).GetComponentsInChildren<MeshRenderer>();
+        //        foreach (MeshRenderer ModelMeshRenderer in MeshRenderers)
+        //        {
+        //            ModelMeshRenderer.material = Modelmaterials[0].materials[i].DefaultMaterial;
+        //        }
+        //    }
+        //}
+    }
     public void ToggleLockManager()
     {
         if (ModelLockToggle.isOn)
         {
             LockModel(true);
-            FaceDetection.SetActive(true);
+            FaceDetection.GetComponent<ARFaceManager>().enabled = true;
         }
         else
         {
             LockModel(false);
-            FaceDetection.SetActive(false);
+            FaceDetection.GetComponent<ARFaceManager>().enabled = false;
         }
     }
     private void ResetToggle(bool value)
@@ -143,34 +160,64 @@ public class PatientManager : MonoBehaviour
     }
     public void ApplyFaceCustomizedTransparency()
     {
-        color = Modelmaterials[0].materials[0].TransparentMaterial.color;
-        color.a = FaceTransparencySlider.value;
-        Modelmaterials[0].materials[0].TransparentMaterial.color = color;
+        if (FaceTransparencySlider.value>=0.95)
+        {
+            MakeModelsSolidVisible(0);
+        }
+        else
+        {
+            MakeModelTransparent(0);
+            color = Modelmaterials[0].materials[0].TransparentMaterial.color;
+            color.a = FaceTransparencySlider.value;
+            Modelmaterials[0].materials[0].TransparentMaterial.color = color;
+            //MakeModelsSolidVisible(1);
+            //MakeModelsSolidVisible(2);
+        }
+        
     }
     public void ApplySkullCustomizedTransparency()
     {
-        color = Modelmaterials[0].materials[1].TransparentMaterial.color;
-        color.a = SkullTransparencySlider.value;
-        Modelmaterials[0].materials[1].TransparentMaterial.color = color;
+        if (SkullTransparencySlider.value >= 0.95 && FaceTransparencySlider.value == 1)
+        {
+            MakeModelsSolidVisible(1);
+        }
+        else
+        {
+            MakeModelTransparent(1);
+            color = Modelmaterials[0].materials[1].TransparentMaterial.color;
+            color.a = SkullTransparencySlider.value;
+            Modelmaterials[0].materials[1].TransparentMaterial.color = color;
+            //MakeModelsSolidVisible(2);
+        }
+        
     }
     public void ApplyBrainCustomizedTransparency()
     {
-        color = Modelmaterials[0].materials[2].TransparentMaterial.color;
-        color.a = BrainTransparencySlider.value;
-        Modelmaterials[0].materials[2].TransparentMaterial.color = color;
-    }
-    private void SetDefaultTransparency()
-    {
-        for (int i = 0; i < Modelmaterials.Length; i++)
+        if (BrainTransparencySlider.value >= 0.95)
         {
-            for (int j = 0; j < Modelmaterials[i].materials.Length; j++)
-            {
-                color = Modelmaterials[i].materials[j].TransparentMaterial.color;
-                color.a = DefaultTransparencyValue;
-                Modelmaterials[i].materials[j].TransparentMaterial.color = color;
-            }
+            MakeModelsSolidVisible(2);
         }
+        else
+        {
+            MakeModelTransparent(2);
+            color = Modelmaterials[0].materials[2].TransparentMaterial.color;
+            color.a = BrainTransparencySlider.value;
+            Modelmaterials[0].materials[2].TransparentMaterial.color = color;
+        }
+        
     }
+    //private void SetDefaultTransparency()
+    //{
+    //    for (int i = 0; i < Modelmaterials.Length; i++)
+    //    {
+    //        for (int j = 0; j < Modelmaterials[i].materials.Length; j++)
+    //        {
+    //            color = Modelmaterials[i].materials[j].TransparentMaterial.color;
+    //            color.a = DefaultTransparencyValue;
+    //            Modelmaterials[i].materials[j].TransparentMaterial.color = color;
+    //        }
+    //    }
+    //}
     private void ResetScrollValue()
     {
         FaceTransparencySlider.value = DefaultTransparencyValue;
